@@ -386,3 +386,29 @@ describe('formatDate', () => {
     expect(formatDate(currentDate)).toBe('2025-02-05');
   });
 });
+
+describe('adjustRepeatDate - 과제1 반복 유형 선택', () => {
+  it('매월 반복: 31일이 없는 달(2월)에서는 마지막 날로 조정 (윤년)', () => {
+    expect(adjustRepeatDate('2024-01-31', 'monthly')).toBe('2024-02-29'); // 2024년은 윤년
+  });
+
+  it('매월 반복: 31일이 없는 달(2월)에서는 마지막 날로 조정 (비윤년)', () => {
+    expect(adjustRepeatDate('2025-01-31', 'monthly')).toBe('2025-02-28'); // 2025년은 비윤년
+  });
+
+  it('매월 반복: 30일이 있는 달에서는 동일한 날짜 유지', () => {
+    expect(adjustRepeatDate('2024-04-30', 'monthly')).toBe('2024-05-30'); // 4월 30일 → 5월 30일
+  });
+
+  it('매년 반복: 윤년 2월 29일이 비윤년에서는 2월 28일로 변경', () => {
+    expect(adjustRepeatDate('2024-02-29', 'yearly')).toBe('2025-02-28'); // 2025년은 비윤년
+  });
+
+  it('매년 반복: 일반적인 2월 28일은 동일하게 유지', () => {
+    expect(adjustRepeatDate('2023-02-28', 'yearly')).toBe('2024-02-28'); // 그대로 유지
+  });
+
+  it('매년 반복: 윤년이 계속되는 경우 2월 29일 유지', () => {
+    expect(adjustRepeatDate('2028-02-29', 'yearly')).toBe('2029-02-28'); // 2029년은 비윤년
+  });
+});
