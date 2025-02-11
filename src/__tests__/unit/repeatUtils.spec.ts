@@ -90,20 +90,20 @@ describe('반복 일정(유형, 간격) 유틸 함수 테스트', () => {
     expect(events[2].date).toBe('2024-05-12'); // 마지막 일정
   });
 
-  it('31일 매 달 반복일때 31이 없는 달에는 마지막 날이 변경되는지 확인', () => {
+  it('31일 매 달 반복일때 31이 없는 달에는 반복 없음', () => {
     const newEvent: Event = {
       ...baseEvent,
       date: '2024-01-31',
-      repeat: { type: 'monthly', interval: 1, endDate: '2024-04-30' },
+      repeat: { type: 'monthly', interval: 1, endDate: '2024-05-31' },
     };
 
     const events = generateRecurringEvents(newEvent);
-    expect(events[1].date).toBe('2024-02-29'); // 2월은 29일까지 있음
-    expect(events[2].date).toBe('2024-03-31'); // 3월은 31일까지 있음
-    expect(events[3].date).toBe('2024-04-30'); // 4월은 30일까지 있음
+
+    expect(events[1].date).toBe('2024-03-31'); // 3월은 31일까지 있음
+    expect(events[2].date).toBe('2024-05-31'); // 4월은 30일까지 있음
   });
 
-  it('30일 매 달 반복일때 30이 없는 달에는 마지막 날이 변경되는지 확인', () => {
+  it('30일 매 달 반복일때 30이 없는 달에는 반복 없음', () => {
     const newEvent: Event = {
       ...baseEvent,
       date: '2024-11-30',
@@ -111,11 +111,10 @@ describe('반복 일정(유형, 간격) 유틸 함수 테스트', () => {
     };
 
     const events = generateRecurringEvents(newEvent);
-    expect(events[1].date).toBe('2024-12-31'); // 12월은 31일까지 있음
-    expect(events[2].date).toBe('2025-01-31'); // 1월은 31일까지 있음
-    expect(events[3].date).toBe('2025-02-28'); // 2월은 28일까지 있음
-    expect(events[4].date).toBe('2025-03-31'); // 3월은 31일까지 있음
-    expect(events[5].date).toBe('2025-04-30'); // 4월은 30일까지 있음
+    expect(events[1].date).toBe('2024-12-30'); // 12월은 31일까지 있음
+    expect(events[2].date).toBe('2025-01-30'); // 1월은 31일까지 있음
+    expect(events[3].date).toBe('2025-03-30'); // 3월은 31일까지 있음
+    expect(events[4].date).toBe('2025-04-30'); // 4월은 30일까지 있음
   });
 
   it('매년 반복 일정이 5년 동안 생성되는지 확인', () => {
