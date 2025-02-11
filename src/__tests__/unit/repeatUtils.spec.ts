@@ -20,6 +20,7 @@ describe('반복 일정(유형, 간격) 유틸 함수 테스트', () => {
   };
 
   it('매일 반복 일정이 생성되는지 확인', () => {
+    const events = generateRecurringEvents(baseEvent);
     expect(events).toHaveLength(61); // 원본 포함 61개
     expect(events[0].date).toBe('2024-01-01'); // 시작 날짜
     expect(events[1].date).toBe('2024-01-02'); // 1일 뒤
