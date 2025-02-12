@@ -18,15 +18,6 @@ const renderApp = () => {
   );
 };
 
-// const setDate = () => {
-//   vi.useFakeTimers();
-//   vi.setSystemTime(new Date('2025-02-02'));
-// };
-
-// const resetDate = () => {
-//   vi.useRealTimers();
-// };
-
 const setupDateWithTime = (dateString: string, timeString: string) => {
   const date = new Date(`${dateString}T${timeString}`);
   vi.setSystemTime(date);
@@ -47,7 +38,6 @@ const events: Event[] = [
   },
 ];
 
-//let user: UserEvent;
 describe('일정 CRUD 및 기본 기능', () => {
   const newEvent: EventForm = {
     title: '이벤트 추가 테스트',
@@ -62,22 +52,19 @@ describe('일정 CRUD 및 기본 기능', () => {
   };
 
   beforeEach(() => {
-    // vi.useFakeTimers();
     setupDateWithTime('2025-02-03', '09:00');
   });
 
   afterEach(() => {
     vi.useRealTimers();
-    // resetDate();
   });
 
   it('입력한 새로운 일정 정보에 맞춰 모든 필드가 이벤트 리스트에 정확히 저장된다.', async () => {
-    // ! HINT. event를 추가 제거하고 저장하는 로직을 잘 살펴보고, 만약 그대로 구현한다면 어떤 문제가 있을 지 고민해보세요.
     setupMockHandlerCreation([...events]);
 
     renderApp();
     const user = userEvent.setup();
-    // screen.debug(await screen.findAllByLabelText(/제목/));
+
     const titleInput = screen.getByLabelText('제목');
     const dateInput = screen.getByLabelText('날짜');
     const startTimeInput = screen.getByLabelText('시작 시간');
@@ -86,11 +73,6 @@ describe('일정 CRUD 및 기본 기능', () => {
     const locationInput = screen.getByLabelText('위치');
     const categorySelect = screen.getByLabelText('카테고리');
     const notificationTimeSelect = screen.getByLabelText('알림 설정');
-    const repeatCheckbox = screen.getByLabelText('반복 일정');
-    // const notificationSelect = screen.getByLabelText('알림 설정');
-    // const repeatTypeSelect = screen.getByLabelText('반복 유형');
-    // const repeatIntervalInput = screen.getByLabelText('반복 간격');
-    // const repeatEndDateInput = screen.getByLabelText('반복 종료일');
 
     const addButton = screen.getByRole('button', { name: '일정 추가' });
 
@@ -102,11 +84,6 @@ describe('일정 CRUD 및 기본 기능', () => {
     await user.type(locationInput, newEvent.location);
     await user.selectOptions(categorySelect, newEvent.category);
     await user.selectOptions(notificationTimeSelect, newEvent.notificationTime.toString());
-    await user.click(repeatCheckbox);
-
-    // await userEvent.selectOptions(repeatTypeSelect, newEvent.repeat.type);
-    // await userEvent.type(repeatIntervalInput, newEvent.repeat.interval.toString());
-    // await userEvent.type(repeatEndDateInput, newEvent.repeat.endDate!);
 
     await user.click(addButton);
 
