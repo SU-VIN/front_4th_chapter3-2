@@ -10,6 +10,7 @@ import {
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 import { useEventStore } from './../hooks/useEventForm.ts';
 import { RepeatType } from './../types';
@@ -52,6 +53,12 @@ function AddEventForm(props: AddEventFormProps) {
     setStartTime,
     setEndTime,
   } = useEventStore();
+
+  useEffect(() => {
+    if (repeatType === 'none') {
+      setRepeatType('daily');
+    }
+  }, [repeatType]);
 
   return (
     <VStack w="400px" spacing={5} align="stretch">

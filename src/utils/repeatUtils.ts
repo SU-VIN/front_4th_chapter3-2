@@ -48,19 +48,3 @@ export function generateRecurringEvents(event: Event | EventForm): EventForm[] {
 
   return recurringEvents;
 }
-
-export function modifySingleEvent(eventId: string, events: Event[]): Event[] {
-  return events.map((event) => {
-    if (event.id === eventId) {
-      return {
-        ...event,
-        repeat: { type: 'none', interval: 1 }, // 개별 일정으로 변경
-      };
-    }
-    return event;
-  });
-}
-
-export function deleteSingleEvent(eventId: string, events: Event[]): Event[] {
-  return events.filter((event) => event.id !== eventId);
-}
