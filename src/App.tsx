@@ -93,7 +93,6 @@ function App() {
   const toast = useToast();
 
   const addOrUpdateEvent = async () => {
-    console.log(repeatType, repeatInterval, repeatEndDate);
     if (!title || !date || !startTime || !endTime) {
       toast({
         title: '필수 정보를 모두 입력해주세요.',

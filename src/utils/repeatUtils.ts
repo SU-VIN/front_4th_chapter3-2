@@ -1,7 +1,7 @@
 import { Event, EventForm } from '../types';
 import { getDaysInMonth } from './dateUtils';
 
-export function generateRecurringEvents(event: Event): EventForm[] {
+export function generateRecurringEvents(event: Event | EventForm): EventForm[] {
   const { repeat, ...baseEvent } = event;
   if (repeat.type === 'none') return [event];
 
