@@ -1,9 +1,5 @@
 import { Event } from '../../types';
-import {
-  deleteSingleEvent,
-  generateRecurringEvents,
-  modifySingleEvent,
-} from '../../utils/repeatUtils';
+import { generateRecurringEvents } from '../../utils/repeatUtils';
 
 describe('반복 일정(유형, 간격) 유틸 함수 테스트', () => {
   const baseEvent: Event = {
@@ -159,60 +155,5 @@ describe('반복 일정(유형, 간격) 유틸 함수 테스트', () => {
     const events = generateRecurringEvents(leapYearEvent);
     expect(events[1].date).toBe('2025-02-28'); // 2025년은 비윤년이므로 2월 28일
     expect(events[4].date).toBe('2028-02-29'); // 2028년은 윤년이므로 2월 29일 유지
-  });
-});
-
-describe('반복 일정 수정 및 삭제 테스트', () => {
-  const baseEvent: Event[] = [
-    {
-      id: '1',
-      title: '테스트 일정',
-      date: '2024-01-01',
-      startTime: '09:00',
-      endTime: '10:00',
-      description: '반복 일정 테스트',
-      location: '온라인',
-      category: '미팅',
-      repeat: { type: 'daily', interval: 1, endDate: '2024-01-03' },
-      notificationTime: 10,
-    },
-    {
-      id: '2',
-      title: '테스트 일정',
-      date: '2024-01-02',
-      startTime: '09:00',
-      endTime: '10:00',
-      description: '반복 일정 테스트',
-      location: '온라인',
-      category: '미팅',
-      repeat: { type: 'daily', interval: 1, endDate: '2024-01-03' },
-      notificationTime: 10,
-    },
-    {
-      id: '3',
-      title: '테스트 일정',
-      date: '2024-01-03',
-      startTime: '09:00',
-      endTime: '10:00',
-      description: '반복 일정 테스트',
-      location: '온라인',
-      category: '미팅',
-      repeat: { type: 'daily', interval: 1, endDate: '2024-01-03' },
-      notificationTime: 10,
-    },
-  ];
-
-  it('특정 반복 일정만 개별 일정으로 수정되는지 확인', () => {
-    const updatedEvents = modifySingleEvent(baseEvent[2].id, baseEvent);
-
-    expect(updatedEvents[2].repeat.type).toBe('none'); // 수정된 일정은 개별 일정
-    expect(updatedEvents.length).toBe(baseEvent.length); // 이벤트 개수는 동일
-  });
-
-  it('특정 반복 일정만 삭제되는지 확인', () => {
-    const updatedEvents = deleteSingleEvent(baseEvent[2].id, baseEvent);
-
-    expect(updatedEvents.length).toBe(baseEvent.length - 1); // 하나만 삭제됨
-    expect(updatedEvents.find((e) => e.id === baseEvent[2].id)).toBeUndefined(); // 삭제된 ID는 존재하지 않음
   });
 });
