@@ -177,28 +177,33 @@ function AddEventForm(props: AddEventFormProps) {
               <option value="yearly">매년</option>
             </Select>
           </FormControl>
-          <FormControl>
-            <FormLabel>반복 종료일 유형</FormLabel>
-            <Select
-              value={endDateType}
-              onChange={(e) => setEndDateHandler(e.target.value as EndDateType)}
-            >
-              <option value="date">특정 날짜</option>
-              <option value="number">반복 횟수</option>
-              <option value="none">종료 없음 (최대 2025-06-30까지)</option>
-            </Select>
-          </FormControl>
-          {endDateType === 'number' && (
-            <FormControl>
-              <FormLabel>반복 횟수</FormLabel>
-              <Input
-                type="number"
-                value={repeatCount}
-                onChange={(e) => setRepeatCount(Number(e.target.value))}
-                min={1}
-              />
-            </FormControl>
+          {!editingEvent && (
+            <>
+              <FormControl>
+                <FormLabel>반복 종료일 유형</FormLabel>
+                <Select
+                  value={endDateType}
+                  onChange={(e) => setEndDateHandler(e.target.value as EndDateType)}
+                >
+                  <option value="date">특정 날짜</option>
+                  <option value="number">반복 횟수</option>
+                  <option value="none">종료 없음 (최대 2025-06-30까지)</option>
+                </Select>
+              </FormControl>
+              {endDateType === 'number' && (
+                <FormControl>
+                  <FormLabel>반복 횟수</FormLabel>
+                  <Input
+                    type="number"
+                    value={repeatCount}
+                    onChange={(e) => setRepeatCount(Number(e.target.value))}
+                    min={1}
+                  />
+                </FormControl>
+              )}
+            </>
           )}
+
           <HStack width="100%">
             <FormControl>
               <FormLabel>반복 간격</FormLabel>
