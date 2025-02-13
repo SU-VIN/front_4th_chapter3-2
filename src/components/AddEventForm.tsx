@@ -66,8 +66,7 @@ function AddEventForm(props: AddEventFormProps) {
 
   useEffect(() => {
     setEndDateHandler(endDateType);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [endDateType]);
+  }, [endDateType, repeatCount]);
 
   const setEndDateHandler = (type: EndDateType) => {
     setEndDateType(type);
