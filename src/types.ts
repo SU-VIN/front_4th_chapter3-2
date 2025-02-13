@@ -1,5 +1,7 @@
 export type RepeatType = 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
 
+export type EndDateType = 'date' | 'number' | 'none';
+
 export interface RepeatInfo {
   type: RepeatType;
   interval: number;

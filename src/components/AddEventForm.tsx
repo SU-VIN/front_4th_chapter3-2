@@ -10,11 +10,12 @@ import {
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useEventStore } from './../hooks/useEventForm.ts';
-import { RepeatType } from './../types';
+import { EndDateType, RepeatType } from './../types';
 import { categories, notificationOptions } from '../constants/datas.ts';
+import { getEndDate } from '../utils/endDateUtils.ts';
 import { getTimeErrorMessage } from './../utils/timeValidation';
 
 interface AddEventFormProps {
@@ -54,11 +55,29 @@ function AddEventForm(props: AddEventFormProps) {
     setEndTime,
   } = useEventStore();
 
+  const [endDateType, setEndDateType] = useState<EndDateType>('date');
+  const [repeatCount, setRepeatCount] = useState<number>(1);
+
   useEffect(() => {
     if (repeatType === 'none') {
       setRepeatType('daily');
     }
   }, [repeatType, setRepeatType]);
+
+  useEffect(() => {
+    setEndDateHandler(endDateType);
+  }, [repeatCount]);
+
+  const setEndDateHandler = (type: EndDateType) => {
+    setEndDateType(type);
+
+    if (type === 'none') {
+      setRepeatEndDate('2025-06-30');
+    } else if (type === 'number') {
+      const endDate = getEndDate(date, repeatType, repeatInterval, repeatCount);
+      setRepeatEndDate(endDate);
+    }
+  };
 
   return (
     <VStack w="400px" spacing={5} align="stretch">
@@ -158,6 +177,28 @@ function AddEventForm(props: AddEventFormProps) {
               <option value="yearly">매년</option>
             </Select>
           </FormControl>
+          <FormControl>
+            <FormLabel>반복 종료일 유형</FormLabel>
+            <Select
+              value={endDateType}
+              onChange={(e) => setEndDateHandler(e.target.value as EndDateType)}
+            >
+              <option value="date">특정 날짜</option>
+              <option value="number">반복 횟수</option>
+              <option value="none">종료 없음 (최대 2025-06-30까지)</option>
+            </Select>
+          </FormControl>
+          {endDateType === 'number' && (
+            <FormControl>
+              <FormLabel>반복 횟수</FormLabel>
+              <Input
+                type="number"
+                value={repeatCount}
+                onChange={(e) => setRepeatCount(Number(e.target.value))}
+                min={1}
+              />
+            </FormControl>
+          )}
           <HStack width="100%">
             <FormControl>
               <FormLabel>반복 간격</FormLabel>
@@ -174,6 +215,7 @@ function AddEventForm(props: AddEventFormProps) {
                 type="date"
                 value={repeatEndDate}
                 onChange={(e) => setRepeatEndDate(e.target.value)}
+                disabled={endDateType !== 'date'}
               />
             </FormControl>
           </HStack>
