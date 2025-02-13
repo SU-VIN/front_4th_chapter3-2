@@ -2,3 +2,43 @@
 .vscode
 node_modules
 .coverage
+
+# 📌 Playwright 관련 파일 무시
+playwright-report/
+playwright/.cache/
+test-results/
+.trace/
+*.log
+
+# 📌 Playwright 실행 중 생성되는 브라우저 다운로드 파일
+playwright/.browser/
+
+# 📌 Playwright 스크린샷 및 비디오 녹화 파일 (선택적)
+screenshots/
+videos/
+traces/
+
+# 📌 Node.js 관련
+node_modules/
+npm-debug.log*
+pnpm-lock.yaml
+
+# 📌 환경 변수 및 빌드 관련 파일 무시
+.env
+.env.local
+.env.development
+.env.production
+
+# 📌 Editor 관련 설정 (VS Code, JetBrains 등)
+.vscode/
+.idea/
+*.iml
+
+# 📌 Build 관련 파일 (Vite, Next.js 등)
+dist/
+out/
+coverage/
+
+# 📌 OS 관련 불필요한 파일
+.DS_Store
+Thumbs.db

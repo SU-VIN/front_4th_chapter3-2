@@ -1,27 +1,25 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './src/advanced_e2e_test',
-  timeout: 30000,
-  expect: { timeout: 5000 },
+
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: process.env.CI ? 'dot' : 'html',
   use: {
     baseURL: 'http://localhost:5173',
-    browserName: 'chromium',
-    headless: false,
-    actionTimeout: 5000,
-    video: 'on-first-retry',
-    trace: 'on',
+    trace: 'on-first-retry',
   },
   projects: [
     {
-      name: 'Chromium',
-      use: { browserName: 'chromium' },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
   webServer: {
     command: 'npm run dev',
     port: 5173,
     reuseExistingServer: !process.env.CI,
-    timeout: 60000,
   },
 });
