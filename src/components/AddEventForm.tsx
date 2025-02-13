@@ -58,7 +58,7 @@ function AddEventForm(props: AddEventFormProps) {
     if (repeatType === 'none') {
       setRepeatType('daily');
     }
-  }, [repeatType]);
+  }, [repeatType, setRepeatType]);
 
   return (
     <VStack w="400px" spacing={5} align="stretch">

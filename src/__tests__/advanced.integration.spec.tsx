@@ -14,11 +14,6 @@ const renderApp = (addOrUpdateEvent: () => void) => {
   );
 };
 
-const setupDateWithTime = (dateString: string, timeString: string) => {
-  const date = new Date(`${dateString}T${timeString}`);
-  vi.setSystemTime(date);
-};
-
 describe('AddEventForm', () => {
   beforeEach(() => {
     useEventStore.getState().resetForm();
