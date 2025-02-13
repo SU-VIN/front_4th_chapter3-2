@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './src/__tests__/e2e',
+  testDir: './src/advanced_e2e_test',
   timeout: 30000,
   expect: { timeout: 5000 },
   use: {
@@ -22,5 +22,6 @@ export default defineConfig({
     command: 'npm run dev',
     port: 5173,
     reuseExistingServer: !process.env.CI,
+    timeout: 60000,
   },
 });
